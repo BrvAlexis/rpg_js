@@ -1,14 +1,15 @@
 # Projet RPG Gladiateur en JavaScript
 ## Description
-Bienvenue dans notre projet de jeu RPG où vous contrôlerez cinq personnages gladiateurs uniques, chacun avec ses propres caractéristiques et compétences. Le but du jeu est de survivre à travers dix tours d’affrontements intenses. Le personnage avec le plus de points de vie (hp) à la fin des dix tours sera déclaré vainqueur.
+Bienvenue dans notre projet de jeu RPG où vous contrôlerez cinq personnages gladiateurs uniques, chacun avec ses propres caractéristiques et compétences. Le but du jeu est de survivre à travers dix tours d’affrontements intenses.  
+Le personnage avec le plus de points de vie (hp) à la fin des dix tours sera déclaré vainqueur.
 
 ## Personnages et Classes
 Chaque personnage possède trois attributs principaux :
 
-*+ hp (health points) : Les points de vie. Un personnage est éliminé s’il atteint 0 hp.
-*+ dmg (damage) : Les points de dégât. Chaque personnage peut effectuer une attaque simple infligeant des dégâts précis à une cible.
-*+ mana : Les points de mana permettent d’utiliser des attaques spéciales. Chaque sortilège spécial a un coût en mana.  
-Nous avons cinq classes distinctes :  
+* hp (health points) : Les points de vie. Un personnage est éliminé s’il atteint 0 hp.
+* dmg (damage) : Les points de dégât. Chaque personnage peut effectuer une attaque simple infligeant des dégâts précis à une cible.
+* mana : Les points de mana permettent d’utiliser des attaques spéciales. Chaque sortilège spécial a un coût en mana.  
+* Nous avons cinq classes distinctes :  
 
 #### Fighter : Équilibré avec une attaque spéciale “Dark Vision”.
 #### Paladin : Puissant et défensif avec une attaque spéciale “Healing Lighting”.
