@@ -9,6 +9,11 @@ export default class Game {
       this.turnLeft = 10;
       this.characters = [new Fighter('Grace'), new Paladin('Ulder'), new Monk('Moana'), new Berzerker('Draven'), new Assassin('Carl')];
     }
+
+    addNewCharacter(characterData) {
+      // Logique pour ajouter un nouveau personnage à la liste
+      this.characters.push(characterData);
+    } 
   
     startGame() {
       console.log("La partie commence !");

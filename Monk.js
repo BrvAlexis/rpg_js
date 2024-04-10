@@ -2,8 +2,8 @@ import Character from './Character.js';
 
 export default class Monk extends Character {
   constructor(name) {
-    super(8, 2, 200); // hp, dmg, mana
-    this.name = name;
+    super(name, 8, 2, 200); // hp, dmg, mana
+    
     this.healAmount = 8;
     this.healManaCost = 25;
   }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPG_JS</title>
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <form id="characterForm" onsubmit="event.preventDefault(); createCharacter();">
+        <input type="text" id="name" placeholder="Nom du personnage" required>
+        <input type="number" id="hp" placeholder="Points de vie" required>
+        <input type="number" id="dmg" placeholder="Dégâts" required>
+        <input type="number" id="mana" placeholder="Mana" required>
+        <button type="submit">Créer Personnage</button>
+    </form>
+    <button type="button" onclick="startGame()">Démarrer la partie</button>
+    <div id="characterList"></div>
+    <div id="gameConsole"></div>
+</body>
+</html>

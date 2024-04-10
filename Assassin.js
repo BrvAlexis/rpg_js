@@ -2,8 +2,8 @@ import Character from './Character.js';
 
 export default class Assassin extends Character {
   constructor(name) {
-    super(6, 6, 20); // hp, dmg, mana
-    this.name = name;
+    super(name, 6, 6, 20); // hp, dmg, mana
+    
     this.shadowHitDamage = 7;
     this.shadowHitManaCost = 20;
     this.isShadowHitActive = false;

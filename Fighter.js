@@ -2,8 +2,8 @@ import Character from './Character.js';
 
 export default class Fighter extends Character {
   constructor(name) {
-    super(12, 4, 40); // hp, dmg, mana
-    this.name = name;
+    super(name, 12, 4, 40); // hp, dmg, mana, name
+    
     this.darkVisionDamage = 5;
     this.damageReduction = 2;
     this.darkVisionManaCost = 20;

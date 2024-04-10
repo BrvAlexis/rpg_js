@@ -2,8 +2,8 @@ import Character from './Character.js';
 
 export default class Paladin extends Character {
   constructor(name) {
-    super(16, 3, 160); // hp, dmg, mana
-    this.name = name;
+    super(name, 16, 3, 160); // hp, dmg, mana
+    
     this.healingLightingDamage = 4;
     this.healingAmount = 5;
     this.healingLightingManaCost = 40;
