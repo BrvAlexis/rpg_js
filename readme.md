@@ -5,10 +5,10 @@ Bienvenue dans notre projet de jeu RPG où vous contrôlerez cinq personnages gl
 ## Personnages et Classes
 Chaque personnage possède trois attributs principaux :
 
-hp (health points) : Les points de vie. Un personnage est éliminé s’il atteint 0 hp.
-dmg (damage) : Les points de dégât. Chaque personnage peut effectuer une attaque simple infligeant des dégâts précis à une cible.
-mana : Les points de mana permettent d’utiliser des attaques spéciales. Chaque sortilège spécial a un coût en mana.
-Nous avons cinq classes distinctes :
+*+ hp (health points) : Les points de vie. Un personnage est éliminé s’il atteint 0 hp.
+*+ dmg (damage) : Les points de dégât. Chaque personnage peut effectuer une attaque simple infligeant des dégâts précis à une cible.
+*+ mana : Les points de mana permettent d’utiliser des attaques spéciales. Chaque sortilège spécial a un coût en mana.  
+Nous avons cinq classes distinctes :  
 
 #### Fighter : Équilibré avec une attaque spéciale “Dark Vision”.
 #### Paladin : Puissant et défensif avec une attaque spéciale “Healing Lighting”.
