@@ -17,6 +17,6 @@ game.characters.forEach(character => {
 
 // Démarrer le jeu et afficher les statistiques
 game.startGame();
-console.log('Jeu démarré.');
+
 game.watchStats();
-console.log('Statistiques affichées.');
+

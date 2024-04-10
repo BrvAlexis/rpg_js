@@ -24,12 +24,16 @@ export default class Fighter extends Character {
 
   // Surcharge de la méthode takeDamage pour inclure la réduction des dégâts
   takeDamage(damage) {
+    const effectiveDamage = this.isDarkVisionActive ? damage - this.damageReduction : damage;
+    super.takeDamage(effectiveDamage);
     if (this.isDarkVisionActive) {
-      super.takeDamage(damage - this.damageReduction);
-      this.isDarkVisionActive = false; // L'effet ne dure qu'un tour
       console.log(`${this.name} a activé Dark Vision et réduit les dégâts reçus de ${this.damageReduction}.`);
-    } else {
-      super.takeDamage(damage);
+      this.isDarkVisionActive = false; // L'effet ne dure qu'un tour
     }
+  }
+
+  // Surcharge de la méthode specialAttack pour utiliser Dark Vision
+  specialAttack(target) {
+    this.darkVision(target);
   }
 }

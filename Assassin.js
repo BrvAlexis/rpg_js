@@ -9,28 +9,32 @@ export default class Assassin extends Character {
     this.isShadowHitActive = false;
   }
 
-  // Implémentation de l'attaque spéciale Shadow Hit
-  shadowHit(target) {
-    if (this.mana >= this.shadowHitManaCost) {
-      this.mana -= this.shadowHitManaCost;
-      target.takeDamage(this.shadowHitDamage);
-      this.isShadowHitActive = true;
-      console.log(`${this.name} utilise Shadow Hit et inflige ${this.shadowHitDamage} dégâts à ${target.name}.`);
-    } else {
-      console.log(`${this.name} n'a pas assez de mana pour utiliser Shadow Hit.`);
-    }
+ // Implémentation de l'attaque spéciale Shadow Hit
+ shadowHit(target) {
+  if (this.mana >= this.shadowHitManaCost) {
+    this.mana -= this.shadowHitManaCost;
+    target.takeDamage(this.shadowHitDamage);
+    console.log(`${this.name} utilise Shadow Hit et inflige ${this.shadowHitDamage} dégâts à ${target.name}.`);
+  } else {
+    console.log(`${this.name} n'a pas assez de mana pour utiliser Shadow Hit.`);
   }
-
+}
   // Surcharge de la méthode takeDamage pour inclure l'effet de Shadow Hit
   takeDamage(damage) {
-    if (this.isShadowHitActive) {
+    if (!this.isShadowHitActive) {
+      super.takeDamage(damage);
+    } else {
       console.log(`${this.name} esquive l'attaque grâce à Shadow Hit.`);
       this.isShadowHitActive = false; // L'effet ne dure qu'un tour
-    } else {
-      super.takeDamage(damage);
     }
   }
 
+    // Surcharge de la méthode specialAttack pour utiliser Shadow Hit
+  specialAttack(target) {
+    this.shadowHit(target);
+    this.isShadowHitActive = true; // Active l'effet d'esquive pour le prochain tour
+  }
+  
   // Méthode appelée à la fin du tour pour gérer les dégâts de retour de Shadow Hit
   endTurn() {
     if (this.isShadowHitActive && this.hp > 0) {

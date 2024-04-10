@@ -11,11 +11,21 @@ export default class Monk extends Character {
   // Implémentation de l'attaque spéciale Heal
   heal() {
     if (this.mana >= this.healManaCost) {
-      this.hp += this.healAmount;
+      const healValue = this.hp + this.healAmount > this.maxHp ? this.maxHp - this.hp : this.healAmount;
+      this.hp += healValue;
       this.mana -= this.healManaCost;
-      console.log(`${this.name} utilise Heal et se soigne de ${this.healAmount} points de vie.`);
+      console.log(`${this.name} utilise Heal et se soigne de ${healValue} points de vie.`);
     } else {
       console.log(`${this.name} n'a pas assez de mana pour utiliser Heal.`);
     }
   }
+
+   // Surcharge de la méthode specialAttack pour utiliser Heal
+   specialAttack() {
+    console.log(`${this.name} utilise son attaque spéciale sur ${target.name}!`);
+    
+    this.heal(target);
+  }
+
+
 }
