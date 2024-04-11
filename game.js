@@ -1,72 +1,93 @@
-    class Game {
+class Game {
+  constructor() {
+    this.turnLeft = 10;
+    this.characters = [];
+    this.gameLog = document.getElementById('game-log');
+  }
 
-    constructor() {
-      this.turnLeft = 10;
-      this.characters = [new Fighter('Grace'), new Paladin('Ulder'), new Monk('Moana'), new Berzerker('Draven'), new Assassin('Carl')];
-      this.gameLog = document.getElementById('game-log');
-    }
-
-    addNewCharacter(characterData) {
-      // Logique pour ajouter un nouveau personnage à la liste
-      this.characters.push(characterData);
-    } 
-  
-    startGame() {
-      return new Promise((resolve, reject) => {
-        console.log("La partie commence !");
-        while (this.turnLeft > 0 && this.characters.some(char => char.status === 'playing')) {
-          this.startTurn();
-        }
-        this.endGame();
-        resolve();
-      });
-    }
-  
-    startTurn() {
-      console.log(`C'est le tour ${11 - this.turnLeft}`);
-      this.characters = this.characters.sort(() => Math.random() - 0.5); // Mélange aléatoire des personnages
-      this.characters.forEach(character => {
-        if (character.status === 'playing') {
-          console.log(`C'est le moment pour ${character.name} de jouer.`);
-          this.askQuestion(character);
-        }
-      });
+  startGame() {
+   
+    this.addCharacter(new Fighter('Grace'));
+    this.addCharacter(new Paladin('Ulder'));
+    this.addCharacter(new Monk('Moana'));
+    this.addCharacter(new Berzerker('Draven'));
+    this.addCharacter(new Assassin('Carl'));
+    console.log('Personnages créés.');
+    console.log('Liste des personnages :');
+    this.characters.forEach(character => {
+        console.log(`${character.name} - HP: ${character.hp}, DMG: ${character.dmg}, MANA: ${character.mana}`);
+    });
+    console.log('Démarrage du jeu...');
+    while (this.turnLeft > 0 && this.characters.some(char => char.status === 'playing')) {
+      this.startTurn();
       this.skipTurn();
     }
+    this.endGame();
+  }
 
-    askQuestion(character) {
-      return new Promise((resolve) => {
-        const form = document.createElement('form');
-        const question = document.createElement('p');
-        question.textContent = 'Que voulez-vous faire ? (1. Attaquer, 2. Se défendre, 3. Utiliser un objet, 4. Quitter)';
-        form.appendChild(question);
-        // ... (créez des éléments de formulaire pour les options ici)
-        form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          // ... (logique pour gérer la réponse de l'utilisateur)
-          resolve();
-        });
-        this.gameLog.appendChild(form);
-      });
+  addCharacter(character) {
+    this.characters.push(character);
+  }
+
+  createCharacter() {
+    const name = prompt("Entrez le nom du personnage :");
+    const hp = parseInt(prompt("Entrez les points de vie du personnage :"), 10);
+    const dmg = parseInt(prompt("Entrez les points de dégât du personnage :"), 10);
+    const mana = parseInt(prompt("Entrez les points de mana du personnage :"), 10);
+    if (isNaN(hp) || isNaN(dmg) || isNaN(mana)) {
+      console.log("Veuillez entrer des nombres valides.");
+      return this.createCharacter();
     }
-  
-    skipTurn() {
-      this.turnLeft--;
-      console.log(`Il reste ${this.turnLeft} tours.`);
-      if (this.turnLeft === 0) {
-        this.characters.filter(char => char.status === 'playing').forEach(char => char.status = 'winner');
+    const character = new Character(name, hp, dmg, mana);
+    this.addCharacter(character);
+  }
+
+  startTurn() {
+    console.log(`C'est le tour ${11 - this.turnsLeft}`);
+    const playingCharacters = this.characters.filter(char => char.status === 'playing');
+    const randomOrder = playingCharacters.sort(() => Math.random() - 0.5);
+    randomOrder.forEach(character => {
+      if (character.status === 'playing') {
+        console.log(`C'est le moment pour ${character.name} de jouer.`);
+        const action = prompt(`Quelle action ${character.name} doit-il effectuer ? Entrez "attack" pour une attaque normale ou "special" pour une attaque spéciale.`);
+        if (action !== 'attack' && action !== 'special') {
+          console.log("Veuillez entrer 'attack' ou 'special'.");
+          return;
+        }
+        const targetName = prompt(`Qui ${character.name} doit-il attaquer ? Entrez le nom du personnage.`);
+        const target = this.characters.find(char => char.name === targetName && char.status === 'playing');
+        if (!target) {
+          console.log("Ce personnage n'existe pas ou a été éliminé. Veuillez choisir un autre personnage.");
+          return;
+        }
+        if (action === 'attack') {
+          character.dealDamage(target);
+        } else if (action === 'special') {
+          character.specialAttack(target);
+        }
       }
+    });
+  }
+
+  skipTurn() {
+    this.turnLeft--;
+    console.log(`Il reste ${this.turnLeft} tours.`);
+    if (this.turnLeft === 0) {
+      this.characters.filter(char => char.status === 'playing').forEach(char => char.status = 'winner');
     }
-  
-    endGame() {
-      const winners = this.characters.filter(char => char.status === 'winner');
-      if (winners.length) {
-        console.log("Les gagnants sont :");
-        winners.forEach(winner => console.log(winner.name));
-      } else {
-        console.log("Il n'y a pas de gagnants.");
-      }
+  }
+
+  endGame() {
+    const winners = this.characters.filter(char => char.status === 'winner');
+    if (winners.length) {
+      console.log("Les gagnants sont :");
+      winners.forEach(winner => console.log(winner.name));
+    } else {
+      console.log("Il n'y a pas de gagnants.");
     }
+  }
+
+ 
 }
 
 // Initialisation du jeu
@@ -76,15 +97,9 @@ console.log('Jeu initialisé.');
 
 // Ajout de personnages
 console.log('Création des personnages...');
-game.addNewCharacter(new Fighter('Alex', 100, 10, 50));
-game.addNewCharacter(new Paladin('Sam', 150, 15, 30));
+game.addCharacter(new Fighter('Alex', 100, 10, 50));
+game.addCharacter(new Paladin('Sam', 150, 15, 30));
 console.log('Personnages créés.');
-
-// Affichage de la liste des personnages
-console.log('Liste des personnages :');
-game.characters.forEach(character => {
-    console.log(`${character.name} - HP: ${character.hp}, DMG: ${character.dmg}, MANA: ${character.mana}`);
-});
 
 // Démarrage du jeu
 console.log('Démarrage du jeu...');

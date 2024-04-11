@@ -17,8 +17,11 @@
 </head>
 <body>
     <h1>Bienvenue dans votre jeu !</h1>
-    <div id="game-log"></div>
-    <button onclick="startGame()">Commencer le jeu</button>
+   
+    
+    <button onclick="game.chooseCharacter()">Choisir un personnage</button>
+    <button onclick="game.chooseTarget()">Choisir une cible</button>
+    <p id="game-message"></p>
   
     <script src="character.js"></script>
     
@@ -28,16 +31,6 @@
     <script src="monk.js"></script>
     <script src="paladin.js"></script>
     <script src="game.js"></script>
-    <script>
-      function startGame() {
-        // Créez une nouvelle instance de votre jeu
-        const game = new Game();
-  
-        // Commencez le jeu et affichez les logs dans la div #game-log
-        game.startGame().then(logs => {
-          document.getElementById('game-log').textContent = logs.join('\n');
-        });
-      }
-    </script>
+    
 </body>
 </html>

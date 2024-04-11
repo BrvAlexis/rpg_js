@@ -6,6 +6,8 @@ class Character {
       this.mana = mana;
       this.status = 'playing';
     }
+
+    
     attack(target) {
       // Vérifiez si la cible est valide
       if (target && target.status === 'playing') {
@@ -50,13 +52,7 @@ class Character {
         }
       }
       
-      chooseTarget(characters) {
-        // Filtrer les personnages qui peuvent être attaqués
-        const targets = characters.filter(char => char.status === 'playing' && char !== this);
-        // Choisir une cible aléatoirement
-        return targets[Math.floor(Math.random() * targets.length)];
-      }
-      
+     
       
 
       // Méthode pour l'attaque spéciale à surcharger dans les classes dérivées
