@@ -1,6 +1,6 @@
-import Character from './character.js';
 
-export default class Assassin extends Character {
+
+class Assassin extends Character {
   constructor(name) {
     super(name, 6, 6, 20); // hp, dmg, mana
     

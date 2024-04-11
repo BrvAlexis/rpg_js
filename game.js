@@ -1,19 +1,9 @@
-import readline from 'readline';
-import chalk from 'chalk';
-import Fighter from './fighter.js';
-import Paladin from './paladin.js';
-import Monk from './monk.js';
-import Berzerker from './berzerker.js';
-import Assassin from './assassin.js';
+    class Game {
 
-export default class Game {
     constructor() {
       this.turnLeft = 10;
       this.characters = [new Fighter('Grace'), new Paladin('Ulder'), new Monk('Moana'), new Berzerker('Draven'), new Assassin('Carl')];
-      this.rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-      });
+      this.gameLog = document.getElementById('game-log');
     }
 
     addNewCharacter(characterData) {
@@ -22,19 +12,22 @@ export default class Game {
     } 
   
     startGame() {
-      console.log("La partie commence !");
-      while (this.turnLeft > 0 && this.characters.some(char => char.status === 'playing')) {
-        this.startTurn();
-      }
-      this.endGame();
+      return new Promise((resolve, reject) => {
+        console.log("La partie commence !");
+        while (this.turnLeft > 0 && this.characters.some(char => char.status === 'playing')) {
+          this.startTurn();
+        }
+        this.endGame();
+        resolve();
+      });
     }
   
     startTurn() {
-      console.log(chalk.blue(`C'est le tour ${11 - this.turnLeft}`));
+      console.log(`C'est le tour ${11 - this.turnLeft}`);
       this.characters = this.characters.sort(() => Math.random() - 0.5); // Mélange aléatoire des personnages
       this.characters.forEach(character => {
         if (character.status === 'playing') {
-          console.log(chalk.magenta(`C'est le moment pour ${character.name} de jouer.`));
+          console.log(`C'est le moment pour ${character.name} de jouer.`);
           this.askQuestion(character);
         }
       });
@@ -42,21 +35,24 @@ export default class Game {
     }
 
     askQuestion(character) {
-      this.rl.question('Que voulez-vous faire ? (1. Attaquer, 2. Se défendre, 3. Utiliser un objet, 4. Quitter) ', (answer) => {
-        // TODO: Logique pour gérer la réponse de l'utilisateur
-        // ...
-        // Si l'utilisateur n'a pas choisi de quitter, on pose la question à nouveau
-        if (answer !== '4') {
-            this.askQuestion(character);
-        } else {
-            this.rl.close();
-        }
+      return new Promise((resolve) => {
+        const form = document.createElement('form');
+        const question = document.createElement('p');
+        question.textContent = 'Que voulez-vous faire ? (1. Attaquer, 2. Se défendre, 3. Utiliser un objet, 4. Quitter)';
+        form.appendChild(question);
+        // ... (créez des éléments de formulaire pour les options ici)
+        form.addEventListener('submit', (event) => {
+          event.preventDefault();
+          // ... (logique pour gérer la réponse de l'utilisateur)
+          resolve();
+        });
+        this.gameLog.appendChild(form);
       });
     }
   
     skipTurn() {
       this.turnLeft--;
-      console.log(chalk.yellow(`Il reste ${this.turnLeft} tours.`));
+      console.log(`Il reste ${this.turnLeft} tours.`);
       if (this.turnLeft === 0) {
         this.characters.filter(char => char.status === 'playing').forEach(char => char.status = 'winner');
       }
@@ -65,10 +61,10 @@ export default class Game {
     endGame() {
       const winners = this.characters.filter(char => char.status === 'winner');
       if (winners.length) {
-        console.log(chalk.bgGreen.black("Les gagnants sont :"));
-        winners.forEach(winner => console.log(chalk.green(winner.name)));
+        console.log("Les gagnants sont :");
+        winners.forEach(winner => console.log(winner.name));
       } else {
-        console.log(chalk.red("Il n'y a pas de gagnants."));
+        console.log("Il n'y a pas de gagnants.");
       }
     }
 }

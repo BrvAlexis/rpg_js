@@ -1,6 +1,6 @@
-import Character from './character.js';
 
-export default class Berzerker extends Character {
+
+class Berzerker extends Character {
   constructor(name) {
     super(name, 8, 4, 0); // hp, dmg, mana
     

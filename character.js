@@ -1,4 +1,4 @@
-export default class Character {
+class Character {
     constructor(name, hp, dmg, mana,) {
       this.name = name;
       this.hp = hp;

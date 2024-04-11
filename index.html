@@ -4,18 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPG_JS</title>
-    <script type="module" src="main.js" defer></script>
+    <style>
+        #game-log {
+          height: 200px;
+          width: 100%;
+          overflow: auto;
+          border: 1px solid black;
+          padding: 10px;
+          margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <form id="characterForm" onsubmit="event.preventDefault(); createCharacter();">
-        <input type="text" id="name" placeholder="Nom du personnage" required>
-        <input type="number" id="hp" placeholder="Points de vie" required>
-        <input type="number" id="dmg" placeholder="Dégâts" required>
-        <input type="number" id="mana" placeholder="Mana" required>
-        <button type="submit">Créer Personnage</button>
-    </form>
-    <button type="button" onclick="startGame()">Démarrer la partie</button>
-    <div id="characterList"></div>
-    <div id="gameConsole"></div>
+    <h1>Bienvenue dans votre jeu !</h1>
+    <div id="game-log"></div>
+    <button onclick="startGame()">Commencer le jeu</button>
+  
+    <script src="character.js"></script>
+    
+    <script src="assassin.js"></script>
+    <script src="berzerker.js"></script>
+    <script src="fighter.js"></script>
+    <script src="monk.js"></script>
+    <script src="paladin.js"></script>
+    <script src="game.js"></script>
+    <script>
+      function startGame() {
+        // Créez une nouvelle instance de votre jeu
+        const game = new Game();
+  
+        // Commencez le jeu et affichez les logs dans la div #game-log
+        game.startGame().then(logs => {
+          document.getElementById('game-log').textContent = logs.join('\n');
+        });
+      }
+    </script>
 </body>
 </html>

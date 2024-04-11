@@ -1,6 +1,6 @@
-import Character from './character.js';
 
-export default class Fighter extends Character {
+
+class Fighter extends Character {
   constructor(name) {
     super(name, 12, 4, 40); // hp, dmg, mana, name
     
