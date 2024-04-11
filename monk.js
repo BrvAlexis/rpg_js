@@ -1,5 +1,3 @@
-
-
 class Monk extends Character {
   constructor(name) {
     super(name, 8, 2, 200); // hp, dmg, mana
@@ -9,7 +7,7 @@ class Monk extends Character {
   }
 
   // Implémentation de l'attaque spéciale Heal
-  heal() {
+  heal(target) {
     if (this.mana >= this.healManaCost) {
       const healValue = this.hp + this.healAmount > this.maxHp ? this.maxHp - this.hp : this.healAmount;
       this.hp += healValue;
@@ -19,9 +17,9 @@ class Monk extends Character {
       console.log(`${this.name} n'a pas assez de mana pour utiliser Heal.`);
     }
   }
-
-   // Surcharge de la méthode specialAttack pour utiliser Heal
-   specialAttack() {
+  
+  // Surcharge de la méthode specialAttack pour utiliser Heal
+  specialAttack(target) {
     console.log(`${this.name} utilise son attaque spéciale sur ${target.name}!`);
     
     this.heal(target);
