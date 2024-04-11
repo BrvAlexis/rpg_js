@@ -6,7 +6,17 @@ export default class Character {
       this.mana = mana;
       this.status = 'playing';
     }
-  
+    attack(target) {
+      // Vérifiez si la cible est valide
+      if (target && target.status === 'playing') {
+        // Infligez des dégâts à la cible
+        this.dealDamage(target);
+        // Log de l'attaque
+        console.log(`${this.name} attaque ${target.name}. Il lui inflige ${this.dmg} points de dégâts. ${target.name} a ${target.hp} points de vie restants.`);
+      } else {
+        console.log(`${this.name} ne peut pas attaquer car la cible n'est pas valide ou déjà éliminée.`);
+      }
+    }
 
     takeDamage(damage) {
         this.hp -= damage;
@@ -18,12 +28,12 @@ export default class Character {
         }
       }
     
-      dealDamage(victim) {
-        if (victim) { // Vérifiez que la victime est définie
-          victim.takeDamage(this.dmg);
-          if (victim.hp === 0) {
+      dealDamage(target) {
+        if (target) { // Vérifiez que la victime est définie
+          target.takeDamage(this.dmg);
+          if (target.hp === 0) {
             this.mana += 20;
-            console.log(`${this.name} a tué ${victim.name} et regagne 20 points de mana.`);
+            console.log(`${this.name} a tué ${target.name} et regagne 20 points de mana.`);
           }
         } else {
           console.log(`${this.name} essaie d'attaquer une cible qui n'existe pas ou est déjà éliminée.`);
@@ -47,17 +57,7 @@ export default class Character {
         return targets[Math.floor(Math.random() * targets.length)];
       }
       
-      attack(target) {
-        // Vérifiez si la cible est valide
-        if (target && target.status === 'playing') {
-          // Infligez des dégâts à la cible
-          this.dealDamage(target);
-          // Log de l'attaque
-          console.log(`${this.name} attaque ${target.name}. Il lui inflige ${this.dmg} points de dégâts. ${target.name} a ${target.hp} points de vie restants.`);
-        } else {
-          console.log(`${this.name} ne peut pas attaquer car la cible n'est pas valide ou déjà éliminée.`);
-        }
-      }
+      
 
       // Méthode pour l'attaque spéciale à surcharger dans les classes dérivées
       specialAttack(target) {

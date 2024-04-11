@@ -1,14 +1,19 @@
+import readline from 'readline';
 import chalk from 'chalk';
-import Fighter from './Fighter.js';
-import Paladin from './Paladin.js';
-import Monk from './Monk.js';
-import Berzerker from './Berzerker.js';
-import Assassin from './Assassin.js';
+import Fighter from './fighter.js';
+import Paladin from './paladin.js';
+import Monk from './monk.js';
+import Berzerker from './berzerker.js';
+import Assassin from './assassin.js';
 
 export default class Game {
     constructor() {
       this.turnLeft = 10;
       this.characters = [new Fighter('Grace'), new Paladin('Ulder'), new Monk('Moana'), new Berzerker('Draven'), new Assassin('Carl')];
+      this.rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      });
     }
 
     addNewCharacter(characterData) {
@@ -30,10 +35,23 @@ export default class Game {
       this.characters.forEach(character => {
         if (character.status === 'playing') {
           console.log(chalk.magenta(`C'est le moment pour ${character.name} de jouer.`));
-          character.playTurn(this.characters);
+          this.askQuestion(character);
         }
       });
       this.skipTurn();
+    }
+
+    askQuestion(character) {
+      this.rl.question('Que voulez-vous faire ? (1. Attaquer, 2. Se défendre, 3. Utiliser un objet, 4. Quitter) ', (answer) => {
+        // TODO: Logique pour gérer la réponse de l'utilisateur
+        // ...
+        // Si l'utilisateur n'a pas choisi de quitter, on pose la question à nouveau
+        if (answer !== '4') {
+            this.askQuestion(character);
+        } else {
+            this.rl.close();
+        }
+      });
     }
   
     skipTurn() {
@@ -42,12 +60,6 @@ export default class Game {
       if (this.turnLeft === 0) {
         this.characters.filter(char => char.status === 'playing').forEach(char => char.status = 'winner');
       }
-    }
-  
-    watchStats() {
-      this.characters.forEach(char => {
-        console.log(chalk.green(`${char.name} - HP: ${char.hp}, Mana: ${char.mana}, Status: ${char.status}`));
-      });
     }
   
     endGame() {
@@ -59,7 +71,25 @@ export default class Game {
         console.log(chalk.red("Il n'y a pas de gagnants."));
       }
     }
-  }
-  
- 
-  
+}
+
+// Initialisation du jeu
+console.log('Initialisation du jeu...');
+const game = new Game();
+console.log('Jeu initialisé.');
+
+// Ajout de personnages
+console.log('Création des personnages...');
+game.addNewCharacter(new Fighter('Alex', 100, 10, 50));
+game.addNewCharacter(new Paladin('Sam', 150, 15, 30));
+console.log('Personnages créés.');
+
+// Affichage de la liste des personnages
+console.log('Liste des personnages :');
+game.characters.forEach(character => {
+    console.log(`${character.name} - HP: ${character.hp}, DMG: ${character.dmg}, MANA: ${character.mana}`);
+});
+
+// Démarrage du jeu
+console.log('Démarrage du jeu...');
+game.startGame();
