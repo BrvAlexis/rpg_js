@@ -7,7 +7,7 @@ class Character {
       this.status = 'playing';
     }
 
-    
+
     attack(target) {
       // Vérifiez si la cible est valide
       if (target && target.status === 'playing') {
@@ -51,16 +51,28 @@ class Character {
           console.log(`${this.name} n'a pas trouvé de cible.`);
         }
       }
-      
-     
-      
+
+      chooseTarget() {
+        // Filtrer les personnages qui sont encore en jeu
+        const playingCharacters = this.characters.filter(char => char.status === 'playing');
+        
+        // Vérifier s'il y a des personnages en jeu
+        if (playingCharacters.length > 0) {
+          // Choisir un personnage aléatoire parmi ceux qui sont encore en jeu
+          const target = playingCharacters[Math.floor(Math.random() * playingCharacters.length)];
+          
+          // Retourner le personnage choisi
+          return target;
+        } else {
+          // S'il n'y a pas de personnages en jeu, retourner null
+          return null;
+        }
+      }
 
       // Méthode pour l'attaque spéciale à surcharger dans les classes dérivées
       specialAttack(target) {
         // Implémentation spécifique à chaque classe
       }
 
-      showStats() {
-        console.log(`${this.name} - HP: ${this.hp}, DMG: ${this.dmg}, Mana: ${this.mana}, Status: ${this.status}`);
-      }
-    }
+     
+}

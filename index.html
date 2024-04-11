@@ -4,21 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPG_JS</title>
-    <style>
-        #game-log {
-          height: 200px;
-          width: 100%;
-          overflow: auto;
-          border: 1px solid black;
-          padding: 10px;
-          margin-bottom: 10px;
-        }
-    </style>
+   
 </head>
 <body>
-    <h1>Bienvenue dans votre jeu !</h1>
+    <h1>Bienvenue dans Gladiator !</h1>
    
-    
+    <button onclick="startTheGame()">Démarrer le jeu</button>
     <button onclick="game.chooseCharacter()">Choisir un personnage</button>
     <button onclick="game.chooseTarget()">Choisir une cible</button>
     <p id="game-message"></p>
@@ -31,6 +22,26 @@
     <script src="monk.js"></script>
     <script src="paladin.js"></script>
     <script src="game.js"></script>
+    <script>
+        let game;
+         // Créez une nouvelle fonction pour démarrer le jeu
+         function startTheGame() {
+             console.log('Initialisation du jeu...');
+             game = new Game(); 
+             console.log('Jeu initialisé.');
+     
+             // Ajout de personnages
+             console.log('Création des personnages...');
+             game.addCharacter(new Fighter('Alex', 100, 10, 50));
+             game.addCharacter(new Paladin('Sam', 150, 15, 30));
+             console.log('Personnages créés.');
+     
+             // Démarrage du jeu
+             console.log('Démarrage du jeu...');
+             game.startGame();
+            }
+     </script>
+     
     
 </body>
 </html>
